@@ -15,7 +15,6 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "run_at": "document_idle",
       "js": ["/static/js/contentScript.js"]
     }
   ],
@@ -40,5 +39,6 @@
   "background": {
     "scripts": ["background.js"],
     "persistent": true
-  }
+  },
+  "web_accessible_resources": ["*.html"]
 }
