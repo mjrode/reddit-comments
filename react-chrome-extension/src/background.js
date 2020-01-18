@@ -1,52 +1,33 @@
-/*global chrome*/
-// https://developer.chrome.com/extensions/runtime
-import axios from 'axios';
-function axiosGet(request, sender, sendResponse) {
-  let url = `https://postman-echo.com/get`;
-  try {
-    axios.get(url, {
-      params: request.params
-    })
-      .then(function (response) {
-        console.log("axiosGet response: ", response);
-        sendResponse(response);
-      })
-      .catch(function (error) {
-        console.log("axiosGet error: ", error);
-        // sendResponse(error);
-      })
-  } catch (error) {
-    console.log("axiosGet: ", error);
-    throw new Error(error.message);
+//CHANGE THIS ONE!
+// update on URL update
+const clearStorage = () => {
+  chrome.storage.local.clear(function() {
+    console.log('Cleared Storage');
+  });
+};
+chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
+  console.log('onUpdated: ' + tab.url);
+  if (tab.url) {
+    chrome.storage.local.set({ key: tab.url }, function() {
+      console.log('Setting Saved', tab.url);
+    });
   }
-}
+});
 
-function axiosPost(request, sender, sendResponse) {
-  let url = `https://postman-echo.com/post`;
-  try {
-    axios.post(url, {
-      params: request.params
-    })
-      .then(function (response) {
-        console.log("axiosPost response: ", response);
-        sendResponse(response);
-      })
-      .catch(function (error) {
-        console.log("axiosPost error: ", error);
-        // sendResponse(error);
-      })
-  } catch (error) {
-    console.log("axiosPost: ", error);
-    throw new Error(error.message);
-  }
-}
+chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
+  chrome.storage.local.get(null, function(result) {
+    console.log('Storage --', result);
+  });
+});
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log("Starting onMessage");
-  if (request.type === "GET") {
-    axiosGet(request, sender, sendResponse);
-  } else if (request.type === "POST") {
-    axiosPost(request, sender, sendResponse);
-  }
-  return true;
+chrome.tabs.onSelectionChanged.addListener(function(tabId, info) {
+  chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tab) {
+    const currentTab = tab[0];
+    console.log('tab query', currentTab);
+    if (currentTab.url) {
+      chrome.storage.local.set({ key: currentTab.url }, function() {
+        console.log('Setting Saved', currentTab.url);
+      });
+    }
+  });
 });

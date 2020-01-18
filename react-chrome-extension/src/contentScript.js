@@ -1,3 +1,4 @@
+// USE THIS ONE!
 /*global chrome*/
 let div = document.createElement('div');
 div.id = 'contentScriptDivID';
@@ -11,8 +12,11 @@ div.innerHTML = 'React-Chrome-Extension';
 
 let btn = document.createElement('button');
 btn.id = 'contentScriptButtonID';
-btn.innerHTML = 'Click Me';
-
+btn.innerHTML = 'Click Me!';
+chrome.storage.local.get(null, function(result) {
+  document.dispatchEvent(new CustomEvent('csEvent', { detail: result }));
+  console.log('Storage --', result);
+});
 div.appendChild(btn);
 document.body.prepend(div);
 

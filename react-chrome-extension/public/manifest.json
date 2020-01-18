@@ -14,13 +14,9 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://*/*"
-      ],
+      "matches": ["<all_urls>"],
       "run_at": "document_idle",
-      "js": [
-        "/static/js/contentScript.js"
-      ]
+      "js": ["/static/js/contentScript.js"]
     }
   ],
   "permissions": [
@@ -37,11 +33,12 @@
     "contextMenus",
     "*://*/*"
   ],
+  "externally_connectable": {
+    "matches": ["*://*.localhost/*"]
+  },
   "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
+    "scripts": ["background.js"],
+    "persistent": true
   }
 }

@@ -1,3 +1,6 @@
+/* global chrome */
+/* eslint-disable no-undef */
+
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { fetchSubmissionsWithUrl } from './clients/reddit';
@@ -5,25 +8,39 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Posts from './components/reddit/posts/posts';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import lscache from 'lscache';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState(null);
+  const [url, setUrl] = useState(null);
+
+  const clearStorage = () => {
+    chrome.storage.local.clear(function() {
+      console.log('Cleared Storage');
+    });
+  };
 
   const fetchPosts = async () => {
-    const url =
-      'https://variety.com/2020/film/news/disney-dropping-fox-20th-century-studios-1203470349/';
+    if (url) {
+      const response = await fetchSubmissionsWithUrl(url);
+      setPosts(response);
+      // TODO: Why won't this log
 
-    const response = await fetchSubmissionsWithUrl(url);
-    setPosts(response);
-    // TODO: Why won't this log
-    // console.log('Post parent', posts);
-    setIsLoading(false);
+      setIsLoading(false);
+    }
+  };
+
+  const setCurrentUrl = () => {
+    chrome.storage.local.get(null, data => {
+      setUrl(data['key']);
+    });
   };
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+    setCurrentUrl();
+  }, [url]);
 
   return (
     <Router>
