@@ -1,0 +1,47 @@
+{
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "icons": {
+    "16": "chrome_react_14.png",
+    "48": "chrome_react_48.png",
+    "128": "chrome_react_128.png"
+  },
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "/static/js/contentScript.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "alarms",
+    "tabs",
+    "notifications",
+    "unlimitedStorage",
+    "activeTab",
+    "storage",
+    "webNavigation",
+    "activeTab",
+    "declarativeContent",
+    "contextMenus",
+    "*://*/*"
+  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  }
+}
