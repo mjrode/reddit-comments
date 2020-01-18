@@ -1,5 +1,4 @@
 import React from 'react';
-import './post.styles.css';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -21,29 +21,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Post({ post, handleClick }) {
+export default function Comment({ comment }) {
   const classes = useStyles();
+  console.log('Comment', comment.author);
 
   return (
-    <ListItem
-      onClick={() => {
-        handleClick(post);
-      }}
-    >
+    <ListItem>
       <Avatar className={classes.margin} style={{ backgroundColor: '#ff6f00' }}>
         <PostAddRoundedIcon />
       </Avatar>
       <ListItemText
         primary={
           <Typography variant='h6' style={{ color: '#ff6f00' }}>
-            {post.subreddit_name_prefixed}
+            {comment.author.name.toString()}
           </Typography>
         }
         secondary={
           <Typography variant='subtitle1' style={{ color: 'black' }}>
-            {post.title}
+            {comment.body}
             <br></br>
-            Score: {post.ups}
+            Score: {comment.ups}
           </Typography>
         }
       />

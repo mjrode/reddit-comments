@@ -8,21 +8,32 @@ const r = new snoowrap({
 });
 
 export const fetchSubmissionsWithUrl = async url => {
-  const sub = await r.oauthRequest({
-    uri: '/api/info',
-    method: 'get',
-    qs: {
-      url,
-      sort: 'top'
-    }
-  });
-  console.log('Sub', sub);
-  return sub;
+  try {
+    const sub = await r.oauthRequest({
+      uri: '/api/info',
+      method: 'get',
+      qs: {
+        url,
+        sort: 'top',
+        limit: 100
+      }
+    });
+    console.log('Sub', sub);
+    return sub;
+  } catch (error) {
+    console.log('Error in fetching posts', error);
+  }
 };
 
-const fetchCommentsFromSubmission = sub => {
-  sub.map(async sub => {
-    const comments = await r.getSubmission(sub.id).comments;
-    console.log('Sub comments', comments[0]);
-  });
+export const fetchCommentsFromPost = async post => {
+  // Extracting every comment on a thread
+  try {
+    const postWithComments = await r
+      .getSubmission(post.id)
+      .expandReplies({ limit: Infinity, depth: Infinity, sort: 'top' });
+    console.log('Comments', postWithComments.comments);
+    return postWithComments;
+  } catch (error) {
+    console.log('Error in fetching comments', error);
+  }
 };
