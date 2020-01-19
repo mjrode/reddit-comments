@@ -28,6 +28,13 @@ export const fetchSubmissionsWithUrl = async url => {
 
 export const fetchCommentsFromPost = async postID => {
   try {
+    // const res = await r.search({
+    //   query: query,
+    //   restrictSr: false,
+    //   time: 'all',
+    //   sort: 'relevance',
+    //   syntax: 'lucene'
+    // });
     // const sub = await r.getSubmission(postID);
     // console.log('Sub fonud', sub.id);
     // const postWithComments = await sub.comments.fetchMore({
@@ -35,9 +42,9 @@ export const fetchCommentsFromPost = async postID => {
     //   skipReplies: true,
     //   sort: 'top'
     // });
-    const postWithComments = await r
-      .getSubmission(postID)
-      .expandReplies({ limit: 3, depth: 3, sort: 'top' }).comments;
+    console.log('postId', postID);
+    const postWithComments = await r.getSubmission(postID).fetch().comments;
+    // .expandReplies({ limit: 3, depth: 3, sort: 'top' }).comments;
     console.log('Comments response', postWithComments);
     return postWithComments;
   } catch (error) {
