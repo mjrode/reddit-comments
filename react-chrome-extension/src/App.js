@@ -50,7 +50,7 @@ function App() {
           <Navbar />
           <Switch>
             <Route path='/comments' component={Comments}></Route>
-            <Route exact path='/'>
+            <Route path='/'>
               {isLoading && <p>Fetching posts</p>}
               {!isLoading && <Posts posts={posts} />}
             </Route>

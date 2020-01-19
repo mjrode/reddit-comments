@@ -1,14 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ChatBubbleRoundedIcon from '@material-ui/icons/ChatBubbleRounded';
-import {
-  Divider,
-  Box,
-  Grid,
-  Button,
-  Badge,
-  Typography
-} from '@material-ui/core';
+import { Divider, Box, Grid, Button, Badge } from '@material-ui/core';
 import moment from 'moment';
 
 import {

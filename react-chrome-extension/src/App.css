@@ -23,14 +23,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-/* html {
+html {
   height: 1000px;
   width: 1000px;
 }
 body {
   height: 1000px;
   width: 1000px;
-} */
+}
 
 @keyframes App-logo-spin {
   from {

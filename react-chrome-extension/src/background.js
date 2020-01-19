@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*global chrome*/
 
 //CHANGE THIS ONE!

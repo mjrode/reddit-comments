@@ -2,9 +2,9 @@ import snoowrap from 'snoowrap';
 
 const r = new snoowrap({
   userAgent: 'find comments from articles',
-  clientId: 'ZAyR9CwNQyjrFQ',
-  clientSecret: '8I92cXHreT9ozvKJxQYuJF8TjS4',
-  refreshToken: '384356145602-qcQSBNt43EviCdT71ncxmUVqfyk'
+  clientId: 'xxxxxxxxxxxxxx',
+  clientSecret: 'xxxxxxxxxxxxxxxxxxxxxxxxx',
+  refreshToken: 'xxxxxxxxxxxxxxxxxxxxxxxx'
 });
 
 export const fetchSubmissionsWithUrl = async url => {
