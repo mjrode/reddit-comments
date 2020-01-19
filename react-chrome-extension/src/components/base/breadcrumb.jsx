@@ -1,8 +1,8 @@
 import React from 'react';
-import { styledTypography } from './breadcrumb.styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 export default function SimpleBreadcrumbs() {
@@ -20,7 +20,7 @@ export default function SimpleBreadcrumbs() {
               const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
               return last ? (
-                <styledTypography key={to}>{value}</styledTypography>
+                <Typography key={to}>{value}</Typography>
               ) : (
                 <RouterLink color='inherit' to={to} key={to}>
                   {value}

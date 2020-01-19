@@ -27,13 +27,18 @@ export const fetchSubmissionsWithUrl = async url => {
 };
 
 export const fetchCommentsFromPost = async postID => {
-  // Extracting every comment on a thread
-  console.log('Postid ------', postID);
   try {
+    // const sub = await r.getSubmission(postID);
+    // console.log('Sub fonud', sub.id);
+    // const postWithComments = await sub.comments.fetchMore({
+    //   amount: 100,
+    //   skipReplies: true,
+    //   sort: 'top'
+    // });
     const postWithComments = await r
       .getSubmission(postID)
-      .expandReplies({ limit: Infinity, depth: 3, sort: 'top' });
-    console.log('Comments response', postWithComments.comments);
+      .expandReplies({ limit: 3, depth: 3, sort: 'top' }).comments;
+    console.log('Comments response', postWithComments);
     return postWithComments;
   } catch (error) {
     console.log('Error in fetching comments', error);

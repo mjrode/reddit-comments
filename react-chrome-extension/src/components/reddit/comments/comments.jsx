@@ -24,22 +24,13 @@ export default function Comments(props) {
   const [comments, setComments] = useState(null);
   const [post, setPost] = useState(postId);
 
-  // const fetchComments = async () => {
-  //   const response = await ;
-  //   setComments(response.comments);
-  //   setIsLoading(false);
-  // };
-
   useEffect(() => {
     console.log('Post effect', post);
     fetchCommentsFromPost(post)
-      .then(response => setComments(response.comments))
+      .then(response => setComments(response))
       .then(() => setIsLoading(false));
   }, []);
 
-  // const handleClick = id => {};
-
-  const classes = useStyles();
   return (
     <div>
       {comments && (
