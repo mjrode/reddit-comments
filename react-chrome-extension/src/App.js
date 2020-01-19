@@ -6,7 +6,7 @@ import './App.css';
 import { fetchSubmissionsWithUrl } from './clients/reddit';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Posts from './components/reddit/posts/posts';
-import Container from '@material-ui/core/Container';
+import Comments from './components/reddit/comments/comments';
 import Grid from '@material-ui/core/Grid';
 import Navbar from './components/base/Navbar';
 
@@ -36,6 +36,7 @@ function App() {
 
   useEffect(() => {
     setCurrentUrl();
+    console.log('effect url', url);
     fetchSubmissionsWithUrl(url)
       .then(posts => setPosts(posts))
       .then(() => setIsLoading(false));
@@ -52,9 +53,13 @@ function App() {
       >
         <div className='App'>
           <Navbar />
-          {isLoading && <p>Fetching posts</p>}
-
-          {!isLoading && <Posts posts={posts} />}
+          <Switch>
+            <Route path='/comments' component={Comments}></Route>
+            <Route exact path='/'>
+              {isLoading && <p>Fetching posts</p>}
+              {!isLoading && <Posts posts={posts} />}
+            </Route>
+          </Switch>
         </div>
       </Grid>
     </Router>

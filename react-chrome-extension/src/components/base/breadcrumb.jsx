@@ -1,34 +1,35 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import { styledTypography } from './breadcrumb.styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-const useStyles = makeStyles(theme => ({
-  breadcrumb: {
-    color: 'white'
-  }
-}));
-
-function handleClick(event) {
-  event.preventDefault();
-  console.info('You clicked a breadcrumb.');
-}
+import { Link as RouterLink } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 export default function SimpleBreadcrumbs() {
-  const classes = useStyles();
-
   return (
-    <Breadcrumbs aria-label='breadcrumb' className={classes.breadcrumb}>
-      <Link className={classes.breadcrumb} href='/' onClick={handleClick}>
-        Posts
-      </Link>
-      <Link
-        className={classes.breadcrumb}
-        href='/getting-started/installation/'
-        onClick={handleClick}
-      >
-        Comments
-      </Link>
-    </Breadcrumbs>
+    <Route>
+      {({ location }) => {
+        const pathnames = location.pathname.split('/').filter(x => x);
+        return (
+          <Breadcrumbs aria-label='Breadcrumb'>
+            <RouterLink color='inherit' to='/'>
+              Home
+            </RouterLink>
+            {pathnames.map((value, index) => {
+              const last = index === pathnames.length - 1;
+              const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+
+              return last ? (
+                <styledTypography key={to}>{value}</styledTypography>
+              ) : (
+                <RouterLink color='inherit' to={to} key={to}>
+                  {value}
+                </RouterLink>
+              );
+            })}
+          </Breadcrumbs>
+        );
+      }}
+    </Route>
   );
 }

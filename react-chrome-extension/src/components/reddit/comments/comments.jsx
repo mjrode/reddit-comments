@@ -16,19 +16,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Comments({ selectedPost }) {
+export default function Comments(props) {
+  console.log('comment props', props);
+  const postId = props.location.state.postId;
+  console.log('coments post is', postId);
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState(null);
-  const [post, setPost] = useState(selectedPost);
+  const [post, setPost] = useState(postId);
 
-  const fetchComments = async () => {
-    const response = await fetchCommentsFromPost(post);
-    setComments(response.comments);
-    setIsLoading(false);
-  };
+  // const fetchComments = async () => {
+  //   const response = await ;
+  //   setComments(response.comments);
+  //   setIsLoading(false);
+  // };
 
   useEffect(() => {
-    fetchComments();
+    console.log('Post effect', post);
+    fetchCommentsFromPost(post)
+      .then(response => setComments(response.comments))
+      .then(() => setIsLoading(false));
   }, []);
 
   // const handleClick = id => {};
@@ -38,9 +44,6 @@ export default function Comments({ selectedPost }) {
     <div>
       {comments && (
         <div>
-          <Typography variant='h1' component='h2' gutterBottom>
-            Comments
-          </Typography>
           <Grid container>
             <Grid item>
               {comments.length}

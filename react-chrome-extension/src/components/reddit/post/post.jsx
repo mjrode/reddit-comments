@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ChatBubbleRoundedIcon from '@material-ui/icons/ChatBubbleRounded';
 import {
   Divider,
@@ -20,9 +21,6 @@ import {
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded';
 
 const hoursSincePost = post => {
-  console.log('Post id', post.id);
-  console.log('Post id', post);
-  console.log('Post', post.thumbnail);
   const postTime = moment.unix(post.created_utc);
   const difference = moment.duration(moment().diff(postTime));
   const hourDifference = difference.asHours();
@@ -76,7 +74,18 @@ export default function Post({ post }) {
         <StyledCardActions>
           <Button size='small' color='primary'>
             <Badge badgeContent={post.num_comments} color='error'>
-              <Box>Comments</Box>
+              <Box>
+                <Link
+                  to={{
+                    pathname: '/comments',
+                    state: {
+                      postId: post.id
+                    }
+                  }}
+                >
+                  Comments
+                </Link>
+              </Box>
               <ChatBubbleRoundedIcon />
             </Badge>
           </Button>
