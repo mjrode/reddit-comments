@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Posts from './components/reddit/posts/posts';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import lscache from 'lscache';
+import Navbar from './components/base/Navbar';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,25 +21,24 @@ function App() {
     });
   };
 
-  const fetchPosts = async () => {
-    if (url) {
-      const response = await fetchSubmissionsWithUrl(url);
-      setPosts(response);
-      // TODO: Why won't this log
-
-      setIsLoading(false);
+  const setCurrentUrl = () => {
+    if (chrome.storage) {
+      chrome.storage.local.get(null, data => {
+        setUrl(data['key']);
+      });
+    } else {
+      console.log(
+        'React app is not running within the context of the Chrome extension'
+      );
+      setUrl('https://www.youtube.com/watch?v=te3OU9fxC8U');
     }
   };
 
-  const setCurrentUrl = () => {
-    chrome.storage.local.get(null, data => {
-      setUrl(data['key']);
-    });
-  };
-
   useEffect(() => {
-    fetchPosts();
     setCurrentUrl();
+    fetchSubmissionsWithUrl(url)
+      .then(posts => setPosts(posts))
+      .then(() => setIsLoading(false));
   }, [url]);
 
   return (
@@ -52,6 +51,7 @@ function App() {
         spacing={0}
       >
         <div className='App'>
+          <Navbar />
           {isLoading && <p>Fetching posts</p>}
 
           {!isLoading && <Posts posts={posts} />}

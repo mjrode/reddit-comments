@@ -1,52 +1,93 @@
 import React from 'react';
-import './post.styles.css';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  },
-  inline: {
-    display: 'inline'
-  },
-  margin: {
-    margin: '1em'
+import ChatBubbleRoundedIcon from '@material-ui/icons/ChatBubbleRounded';
+import {
+  Divider,
+  Box,
+  Grid,
+  Button,
+  Badge,
+  Typography
+} from '@material-ui/core';
+import moment from 'moment';
+
+import {
+  StyledCard,
+  StyledCardActions,
+  StyledImg,
+  StyledPaper,
+  StyledCardContent
+} from './post.styles';
+import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded';
+
+const hoursSincePost = post => {
+  console.log('Post id', post.id);
+  console.log('Post id', post);
+  console.log('Post', post.thumbnail);
+  const postTime = moment.unix(post.created_utc);
+  const difference = moment.duration(moment().diff(postTime));
+  const hourDifference = difference.asHours();
+  if (hourDifference > 14) {
+    const dayDifference = difference.asDays();
+    return `${Math.round(dayDifference)} days ago`;
+  } else {
+    return `${Math.round(hourDifference)} hours ago`;
   }
-}));
+};
+const invalidImages = ['default', 'image'];
 
-export default function Post({ post, handleClick }) {
-  const classes = useStyles();
-
+export default function Post({ post }) {
   return (
-    <ListItem
-      onClick={() => {
-        handleClick(post);
-      }}
-    >
-      <Avatar className={classes.margin} style={{ backgroundColor: '#ff6f00' }}>
-        <PostAddRoundedIcon />
-      </Avatar>
-      <ListItemText
-        primary={
-          <Typography variant='h6' style={{ color: '#ff6f00' }}>
-            {post.subreddit_name_prefixed}
-          </Typography>
-        }
-        secondary={
-          <Typography variant='subtitle1' style={{ color: 'black' }}>
-            {post.title}
-            <br></br>
-            Score: {post.ups}
-          </Typography>
-        }
-      />
-    </ListItem>
+    <StyledCard mt={4}>
+      <StyledPaper primary={'true'}>
+        <Box p={1}>
+          <h1>{`r/${post.subreddit.display_name}`}</h1>
+          <p>
+            {`Posted by u/${post.author.name}`} {hoursSincePost(post)}
+          </p>
+        </Box>
+      </StyledPaper>
+      <Divider />
+      <StyledPaper>
+        <Grid container>
+          <Grid container display='flex'>
+            {!invalidImages.includes(post.thumbnail) && (
+              <Grid item xs={4}>
+                <StyledImg
+                  alt={post.subreddit['display_name']}
+                  src={post.thumbnail}
+                />
+              </Grid>
+            )}
+
+            <Grid item xs={invalidImages.includes(post.thumbnail) ? 12 : 8}>
+              <StyledCardContent
+                p={2}
+                letterSpacing={1}
+                fontSize={20}
+                align='left'
+              >
+                {post.title}
+              </StyledCardContent>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Divider />
+        <StyledCardActions>
+          <Button size='small' color='primary'>
+            <Badge badgeContent={post.num_comments} color='error'>
+              <Box>Comments</Box>
+              <ChatBubbleRoundedIcon />
+            </Badge>
+          </Button>
+          <Button size='small' color='primary'>
+            <Badge badgeContent={post.score} color='error'>
+              <Box>Upvotes</Box>
+              <ExpandLessRoundedIcon />
+            </Badge>
+          </Button>
+        </StyledCardActions>
+      </StyledPaper>
+    </StyledCard>
   );
 }

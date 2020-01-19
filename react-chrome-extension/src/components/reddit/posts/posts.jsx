@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 import Post from '../post/post';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Box } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,15 +31,18 @@ export default function Posts({ posts }) {
     <div>
       {!selectedPost && (
         <div>
-          <Typography variant='h1' component='h2' gutterBottom>
-            Posts
-          </Typography>
           <Grid container>
             <Grid item>
               <List className={classes.root}>
                 {posts.map(post => {
                   return (
-                    <Post key={post.id} post={post} handleClick={handleClick} />
+                    <Box key={post.id} mt={3}>
+                      <Post
+                        key={post.id}
+                        post={post}
+                        handleClick={handleClick}
+                      />
+                    </Box>
                   );
                 })}
                 <Divider variant='inset' component='li' />
