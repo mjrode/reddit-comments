@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { fetchSubmissionsWithUrl } from './clients/reddit';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Posts from './components/reddit/posts/posts';
 import Comments from './components/reddit/comments/comments';
 import Grid from '@material-ui/core/Grid';
@@ -14,12 +14,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState(null);
   const [url, setUrl] = useState(null);
-
-  const clearStorage = () => {
-    chrome.storage.local.clear(function() {
-      console.log('Cleared Storage');
-    });
-  };
 
   const setCurrentUrl = () => {
     if (chrome.storage) {
@@ -36,10 +30,11 @@ function App() {
 
   useEffect(() => {
     setCurrentUrl();
-    console.log('effect url', url);
-    fetchSubmissionsWithUrl(url)
-      .then(posts => setPosts(posts))
-      .then(() => setIsLoading(false));
+    if (url) {
+      fetchSubmissionsWithUrl(url)
+        .then(posts => setPosts(posts))
+        .then(() => setIsLoading(false));
+    }
   }, [url]);
 
   return (

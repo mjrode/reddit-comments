@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { fetchCommentsFromPost } from '../../../clients/reddit.js';
 import Typography from '@material-ui/core/Typography';
 import Comment from '../comment/comment';
 import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  },
-  inline: {
-    display: 'inline'
-  }
-}));
-
 export default function Comments(props) {
-  console.log('comment props', props);
   const postId = props.location.state.postId;
-  console.log('coments post is', postId);
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [post, setPost] = useState(postId);
 
   useEffect(() => {

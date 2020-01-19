@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './posts.styles.css';
 import Comments from '../comments/comments';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Post from '../post/post';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
 import { Grid, Box } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
