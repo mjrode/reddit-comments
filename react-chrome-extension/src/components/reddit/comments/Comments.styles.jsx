@@ -5,6 +5,7 @@ export const StyledGrid = styled(Grid)`
 `;
 
 export const CommentsContainer = styled.div`
+  
   &.hidden {
     display: none;
   }
