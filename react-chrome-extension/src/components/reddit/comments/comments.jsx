@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { fetchCommentsFromPost } from '../../../clients/reddit.js';
 import Typography from '@material-ui/core/Typography';
 import Comment from '../comment/comment';
