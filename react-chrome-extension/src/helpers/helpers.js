@@ -7,7 +7,9 @@ export const setCurrentUrl = setUrl => {
       setUrl(data['key']);
     });
   } else {
-    setUrl('https://www.youtube.com/watch?v=te3OU9fxC8U');
+    setUrl(
+      'https://m.signalvnoise.com/only-15-of-the-basecamp-operations-budget-is-spent-on-ruby/'
+    );
   }
 };
 

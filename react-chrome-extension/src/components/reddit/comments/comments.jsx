@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import { fetchCommentsFromPost } from '../../../clients/reddit.js';
-import Comment from '../comment/comment';
-import { Grid, CircularProgress, Box } from '@material-ui/core';
-import { StyledGrid } from './Comments.styles';
+import CommentCard from './../CommentCard/CommentCard';
+import { Grid, CircularProgress, List } from '@material-ui/core';
+import { CommentsContainer, StyledGrid } from './Comments.styles';
 
 export default function Comments(props) {
   const postId = props.location.state.postId;
@@ -11,6 +11,8 @@ export default function Comments(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState(null);
   // eslint-disable-next-line no-unused-vars
+  const [commentHidden, SetCommentHidden] = useState([]);
+
   const [post, setPost] = useState(postId);
 
   useEffect(() => {
@@ -20,22 +22,59 @@ export default function Comments(props) {
       .then(() => setIsLoading(false));
   }, [post]);
 
+  const setHidden = comment => {
+    const commentId = comment.id;
+    const parentId = comment.parent_id.split('_')[1];
+    console.log('State ', commentHidden);
+    console.log('Hiding ', commentId);
+    console.log('Hiding ', parentId);
+    const updateClass = id => {
+      if (commentHidden[id] === true) return;
+
+      const newState = (commentHidden[id] = true);
+
+      SetCommentHidden({ ...commentHidden, newState });
+      console.log('New state', commentHidden);
+      console.log('New state', commentHidden[id]);
+    };
+    updateClass(parentId);
+    updateClass(commentId);
+  };
+  const generateComments = comments => {
+    return comments.map((comment, index) => {
+      return (
+        <div key={index}>
+          <CommentCard
+            comment={comment}
+            key={comment.id}
+            margin={comment.depth}
+            setHidden={setHidden}
+          ></CommentCard>
+          <CommentsContainer
+            key={index}
+            className={`comments ${comment.id} ${
+              commentHidden[comment.id] ? 'hidden' : ''
+            }`}
+          >
+            {comment.replies.length > 0 && generateComments(comment.replies)}
+          </CommentsContainer>
+        </div>
+      );
+    });
+  };
   return (
     <div>
-      {false && comments && (
+      {comments && (
         <div>
           <Grid container>
             <Grid item>
-              {comments.length}
-              {comments.map(comment => {
-                return <Comment comment={comment} key={comment.id} />;
-              })}
+              <List>{generateComments(comments)}</List>
             </Grid>
           </Grid>
         </div>
       )}
 
-      {true && (
+      {!comments && (
         <StyledGrid
           container
           direction='column'

@@ -18,8 +18,9 @@ import { StyledCard } from './CommentCard.styles';
 import Markdown from './Markdown';
 import { hoursSincePost } from '../../../helpers/helpers.js';
 
-export default function CommentCard({ comment, margin, setHidden }) {
+export default function CommentCard({ comment }) {
   const [minimized, setMinimized] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const subheader = (
     <div className='points'>
@@ -28,12 +29,14 @@ export default function CommentCard({ comment, margin, setHidden }) {
   );
   return (
     <ListItem>
-      <StyledCard margin={margin}>
+      <StyledCard>
         <Grid item>
-          <button className='min' id='hide' onClick={() => setHidden(comment)}>
+          <a className='min' href='google.com'>
             <MinimizeIcon />
-          </button>
+          </a>
         </Grid>
+        <CardContent>{comment.body}</CardContent>
+        <div>{comment.subreddit.name}</div>
         <CardHeader
           title={
             <Grid container>
@@ -50,10 +53,6 @@ export default function CommentCard({ comment, margin, setHidden }) {
           }
           subheader={subheader}
         ></CardHeader>
-
-        <CardContent>
-          <Markdown>{comment.body}</Markdown>
-        </CardContent>
       </StyledCard>
     </ListItem>
   );

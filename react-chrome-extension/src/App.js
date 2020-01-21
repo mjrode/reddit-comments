@@ -6,11 +6,12 @@ import { fetchSubmissionsWithUrl } from './clients/reddit';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Posts from './components/reddit/posts/posts';
 import Comments from './components/reddit/comments/Comments';
-import Grid from '@material-ui/core/Grid';
 import Navbar from './components/Navbar/Navbar';
 import Auth from './components/reddit/auth/auth';
+import { Grid, CircularProgress } from '@material-ui/core';
 import AuthHandler from './components/reddit/auth/AuthHandler';
 import { setCurrentUrl } from './helpers/helpers';
+import { StyledGrid } from './components/reddit/comments/Comments.styles.jsx';
 
 function App() {
   const [posts, setPosts] = useState(null);
@@ -39,7 +40,20 @@ function App() {
             <Route path='/auth/reddit' component={AuthHandler}></Route>
             <Route path='/auth/' component={Auth}></Route>
             <Route path='/'>
-              {!posts && <p>Fetching posts</p>}
+              {!posts && (
+                <StyledGrid
+                  container
+                  direction='column'
+                  justify='center'
+                  alignContent='center'
+                  alignItems='center'
+                >
+                  <Grid item>
+                    <CircularProgress />
+                  </Grid>
+                </StyledGrid>
+              )}
+
               {posts && <Posts posts={posts} />}
             </Route>
           </Switch>

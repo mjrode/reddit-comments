@@ -6,14 +6,24 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
 import Replies from '../replies/replies.jsx';
+
 import CommentCard from '../CommentCard/CommentCard';
 
 export default function Comment({ comment }) {
+  // const generateReplies = comment => {
+  //   console.log('Replies', comment);
+  //   return replies.map((reply, index) => {
+  //     return (
+  //       <CommentCard comment={reply} key={reply.id} margin={index}>
+  //         {console.log('reply', reply)}
+  //         {generateReplies(reply.replies)}
+  //       </CommentCard>
+  //     );
+  //   });
+  // };
   return (
     <Grid container>
-      <List>
-        <CommentCard comment={comment} />
-      </List>
+      {/* <List>{generateReplies(comment)}</List> */}
       {/* <Paper elevation={4}>
         <ListItem>
           <Avatar style={{ backgroundColor: '#ff6f00' }}>
