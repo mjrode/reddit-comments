@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ChatBubbleRoundedIcon from '@material-ui/icons/ChatBubbleRounded';
 import { Divider, Box, Grid, Button, Badge } from '@material-ui/core';
-import moment from 'moment';
+import { hoursSincePost } from './../../../helpers/helpers.js';
 
 import {
   StyledCard,
@@ -13,17 +13,6 @@ import {
 } from './post.styles';
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded';
 
-const hoursSincePost = post => {
-  const postTime = moment.unix(post.created_utc);
-  const difference = moment.duration(moment().diff(postTime));
-  const hourDifference = difference.asHours();
-  if (hourDifference > 14) {
-    const dayDifference = difference.asDays();
-    return `${Math.round(dayDifference)} days ago`;
-  } else {
-    return `${Math.round(hourDifference)} hours ago`;
-  }
-};
 const invalidImages = ['default', 'image'];
 
 export default function Post({ post }) {

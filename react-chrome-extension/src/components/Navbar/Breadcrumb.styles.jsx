@@ -1,10 +1,17 @@
 import styled from 'styled-components';
-import { Typography } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
-export const styledTypography = styled(Typography)`
-  color: white !important;
-`;
+import { Breadcrumbs } from '@material-ui/core';
 
-export const styledRouterLink = styled(RouterLink)`
-  color: white !important;
+export const StyledBreadcrumbs = styled(Breadcrumbs)`
+  a:-webkit-any-link: {
+    color: white;
+    text-decoration: none;
+  }
+
+  p {
+    color: white;
+  }
+
+  li {
+    color: white;
+  }
 `;

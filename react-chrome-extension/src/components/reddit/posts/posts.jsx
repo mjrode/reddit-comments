@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './posts.styles.css';
-import Comments from '../comments/comments';
+import Comments from '../comments/Comments';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Post from '../post/post';

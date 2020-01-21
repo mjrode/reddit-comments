@@ -1,8 +1,8 @@
 import React from 'react';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { Route } from 'react-router-dom';
+import { StyledBreadcrumbs } from './Breadcrumb.styles.jsx';
 
 export default function Breadcrumb() {
   return (
@@ -10,9 +10,9 @@ export default function Breadcrumb() {
       {({ location }) => {
         const pathnames = location.pathname.split('/').filter(x => x);
         return (
-          <Breadcrumbs aria-label='Breadcrumb'>
-            <RouterLink color='inherit' to='/'>
-              Home
+          <StyledBreadcrumbs aria-label='Breadcrumb'>
+            <RouterLink to='/'>
+              <Typography>Posts</Typography>
             </RouterLink>
             {pathnames.map((value, index) => {
               const last = index === pathnames.length - 1;
@@ -22,11 +22,11 @@ export default function Breadcrumb() {
                 <Typography key={to}>{value}</Typography>
               ) : (
                 <RouterLink color='inherit' to={to} key={to}>
-                  {value}
+                  <Typography key={to}> {value}</Typography>
                 </RouterLink>
               );
             })}
-          </Breadcrumbs>
+          </StyledBreadcrumbs>
         );
       }}
     </Route>

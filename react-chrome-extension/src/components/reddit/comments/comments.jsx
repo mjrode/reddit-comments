@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import { fetchCommentsFromPost } from '../../../clients/reddit.js';
-import Typography from '@material-ui/core/Typography';
 import Comment from '../comment/comment';
-import Grid from '@material-ui/core/Grid';
+import { Grid, CircularProgress, Box } from '@material-ui/core';
+import { StyledGrid } from './Comments.styles';
 
 export default function Comments(props) {
   const postId = props.location.state.postId;
@@ -22,7 +22,7 @@ export default function Comments(props) {
 
   return (
     <div>
-      {comments && (
+      {false && comments && (
         <div>
           <Grid container>
             <Grid item>
@@ -35,12 +35,18 @@ export default function Comments(props) {
         </div>
       )}
 
-      {!comments && (
-        <div>
-          <Typography variant='h1' component='h2' gutterBottom>
-            Loading Comments...
-          </Typography>
-        </div>
+      {true && (
+        <StyledGrid
+          container
+          direction='column'
+          justify='center'
+          alignContent='center'
+          alignItems='center'
+        >
+          <Grid item>
+            <CircularProgress />
+          </Grid>
+        </StyledGrid>
       )}
     </div>
   );

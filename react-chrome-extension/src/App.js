@@ -5,7 +5,7 @@ import './App.css';
 import { fetchSubmissionsWithUrl } from './clients/reddit';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Posts from './components/reddit/posts/posts';
-import Comments from './components/reddit/comments/comments';
+import Comments from './components/reddit/comments/Comments';
 import Grid from '@material-ui/core/Grid';
 import Navbar from './components/Navbar/Navbar';
 import Auth from './components/reddit/auth/auth';
