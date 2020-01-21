@@ -18,7 +18,7 @@ export default function Comments(props) {
     fetchCommentsFromPost(post)
       .then(response => setComments(response))
       .then(() => setIsLoading(false));
-  }, []);
+  }, [post]);
 
   return (
     <div>

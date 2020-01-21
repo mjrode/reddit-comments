@@ -1,17 +1,14 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Breadcrumb from './breadcrumb';
-
+import Breadcrumb from './Breadcrumb';
 
 const NavBar = () => {
-
   return (
     <div>
       <AppBar position='static'>
         <Toolbar>
-          <Breadcrumb  />
+          <Breadcrumb />
         </Toolbar>
       </AppBar>
     </div>

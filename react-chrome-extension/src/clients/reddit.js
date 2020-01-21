@@ -1,7 +1,4 @@
-/*global chrome*/
-
 import snoowrap from 'snoowrap';
-import axios from 'axios';
 import lscache from 'lscache';
 const ONE_HOUR_MS = 1000 * 60 * 60;
 
@@ -10,27 +7,29 @@ const ONE_HOUR_MS = 1000 * 60 * 60;
 //     clientId: 'ZAyR9CwNQyjrFQ'
 //   });
 // };
-const fetchUserToken = async () => {
-  const response = await axios.get('https://www.reddit.com/api/v1/authorize', {
-    params: {
-      client_id: 'ZAyR9CwNQyjrFQ',
-      response_type: 'code',
-      state: 'randomstring',
-      redirect_uri: 'http://localhost:3000/auth/reddit',
-      scope:
-        'identity, edit, flair, history, modconfig, modflair,modlog, modposts, modwiki, mysubreddits, privatemessages, read, report, save, submit, subscribe, vote, wikiedit, wikiread'
-    }
-  });
-  console.log('REsponse', response);
-};
+// const fetchUserToken = async () => {
+//   const response = await axios.get('https://www.reddit.com/api/v1/authorize', {
+//     params: {
+//       client_id: 'ZAyR9CwNQyjrFQ',
+//       response_type: 'code',
+//       state: 'randomstring',
+//       redirect_uri: 'http://localhost:3000/auth/reddit',
+//       scope:
+//         'identity, edit, flair, history, modconfig, modflair,modlog, modposts, modwiki, mysubreddits, privatemessages, read, report, save, submit, subscribe, vote, wikiedit, wikiread'
+//     }
+//   });
+//   console.log('REsponse', response);
+// };
 
 const isTokenExpired = () => {
   const currentToken = lscache.get('accessToken');
+  if (!currentToken) return true;
   return currentToken.expiryTime < new Date().getTime();
 };
 
 const fetchAnonymousToken = async () => {
-  if (!isTokenExpired) {
+  if (isTokenExpired()) {
+    console.log('Fetching Token...');
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     const url = 'https://www.reddit.com/api/v1/access_token';
     const params = new URLSearchParams();

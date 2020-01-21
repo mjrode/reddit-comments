@@ -1,11 +1,10 @@
 import React from 'react';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-export default function SimpleBreadcrumbs() {
+export default function Breadcrumb() {
   return (
     <Route>
       {({ location }) => {
